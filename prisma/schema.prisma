@@ -1,0 +1,191 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String
+  password_hash String
+  role_id       String
+  role          Role      @relation(fields: [role_id], references: [id])
+  is_active     Boolean   @default(true)
+  last_login_at DateTime?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+  Media         Media[]
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique // 'super_admin' | 'editor' | 'author'
+  permissions String   // JSON array of permission strings
+  users       User[]
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+}
+
+model Content {
+  id                String         @id @default(cuid())
+  type              String         // 'blog' | 'case_study' etc
+  status            String         // 'draft' | 'pending_review' | 'published' | 'scheduled' | 'archived'
+  title             String
+  subtitle          String?
+  slug              String
+  featured_image_id String
+  featured_image    Media          @relation(fields: [featured_image_id], references: [id])
+  category_id       String
+  category          Category       @relation(fields: [category_id], references: [id])
+  author_id         String
+  author            Author         @relation(fields: [author_id], references: [id])
+  publish_date      DateTime?
+  seo_title         String?
+  seo_description   String?
+  canonical_url     String?
+  view_count        Int            @default(0)
+  read_count        Int            @default(0)
+  word_count        Int            @default(0)
+  blocks            ContentBlock[]
+  tags              ContentTag[]
+  created_at        DateTime       @default(now())
+  updated_at        DateTime       @updatedAt
+
+  @@unique([type, slug])
+}
+
+model ContentBlock {
+  id         String   @id @default(cuid())
+  content_id String
+  content    Content  @relation(fields: [content_id], references: [id], onDelete: Cascade)
+  type       String   // hero, text, image, quote, etc.
+  position   Int      // 1-indexed, unique per content_id
+  data       String   // JSON string containing block data
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Tag {
+  id         String       @id @default(cuid())
+  name       String       @unique
+  slug       String       @unique
+  contents   ContentTag[]
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+}
+
+model ContentTag {
+  content_id String
+  tag_id     String
+  content    Content @relation(fields: [content_id], references: [id], onDelete: Cascade)
+  tag        Tag     @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+
+  @@id([content_id, tag_id])
+}
+
+model Media {
+  id                   String    @id @default(cuid())
+  original_name        String
+  cloudinary_public_id String    @unique
+  cloudinary_url       String
+  mime_type            String
+  size_bytes           Int
+  width                Int?
+  height               Int?
+  alt_text             String?
+  uploaded_by          String
+  uploader             User      @relation(fields: [uploaded_by], references: [id])
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @updatedAt
+  Content              Content[]
+  Author               Author[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  color       String?   // hex color badge
+  contents    Content[]
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+}
+
+model Author {
+  id           String    @id @default(cuid())
+  name         String
+  slug         String    @unique
+  photo_id     String?
+  photo        Media?    @relation(fields: [photo_id], references: [id])
+  designation  String
+  bio          String
+  twitter_url  String?
+  linkedin_url String?
+  website_url  String?
+  contents     Content[]
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+}
+
+model Contact {
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  company    String?
+  message    String
+  status     String   @default("new")
+  source     String?
+  ip_hash    String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Subscriber {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  is_active       Boolean   @default(true)
+  source          String?
+  unsubscribed_at DateTime?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(cuid())
+  event_type String
+  content_id String?
+  session_id String
+  payload    String?  // JSON string
+  created_at DateTime @default(now())
+}
+
+model Redirect {
+  id          String   @id @default(cuid())
+  from_path   String   @unique
+  to_path     String
+  status_code Int      @default(301)
+  created_at  DateTime @default(now())
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  quote       String
+  author      String
+  designation String
+  company     String
+  category    String   // 'startup' | 'agency' | 'business' | 'enterprise' | 'saas'
+  created_at  DateTime @default(now())
+}
+
+model Faq {
+  id         String   @id @default(cuid())
+  question   String
+  answer     String
+  position   Int      @default(0)
+  created_at DateTime @default(now())
+}
