@@ -170,7 +170,7 @@ export async function updateLeadStatus(leadId: string, newStatus: string) {
     });
     revalidatePath("/admin/leads");
     return { success: true };
-  } catch (e) {
+  } catch (_e) {
     return { error: "Failed to update status." };
   }
 }
@@ -265,7 +265,7 @@ export async function saveContent(input: ContentSaveInput) {
   // - Author can only create or edit own content.
   // - Editors/Super Admins can publish or edit anyone's content.
   const isAuthor = session.role === "author";
-  const isEditorOrAdmin = session.role === "editor" || session.role === "super_admin";
+  const _isEditorOrAdmin = session.role === "editor" || session.role === "super_admin";
 
   if (isAuthor && input.status === "published") {
     // Authors cannot publish directly; status changes to pending_review

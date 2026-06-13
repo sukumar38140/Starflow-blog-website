@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
-import { FileText, Eye, Brain, Inbox, Users, ArrowUpRight, CheckCircle } from "lucide-react";
+import { FileText, Eye, Brain, Users, ArrowUpRight, CheckCircle } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -38,7 +38,7 @@ export default async function AdminDashboard() {
     where: { is_active: true },
   });
 
-  const totalLeads = await prisma.contact.count({
+  const _totalLeads = await prisma.contact.count({
     where: { status: "new" },
   });
 

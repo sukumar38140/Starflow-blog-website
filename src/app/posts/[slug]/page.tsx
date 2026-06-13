@@ -8,7 +8,7 @@ import ActiveHeadingTracker from "@/components/ActiveHeadingTracker";
 import ShareButtons from "@/components/ShareButtons";
 import ReadProgressTracker from "@/components/ReadProgressTracker";
 import PostCard from "@/components/PostCard";
-import { Calendar, Clock, ArrowLeft, User, Eye, Bookmark, Tag } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, User, Eye, Tag } from "lucide-react";
 import type { Metadata } from "next";
 
 export const revalidate = 300; // ISR revalidation: 300 seconds as per PRD §12.3
@@ -100,7 +100,7 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
             id: parsed.heading.toLowerCase().replace(/[^\w]+/g, "-"),
           };
         }
-      } catch (e) {}
+      } catch (_e) {}
       return null;
     })
     .filter(Boolean) as { text: string; id: string }[];

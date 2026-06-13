@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createBlankArticle } from "@/lib/actions";
 import { Plus } from "lucide-react";

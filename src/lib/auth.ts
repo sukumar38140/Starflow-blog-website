@@ -31,7 +31,7 @@ export async function verifySessionToken(token: string): Promise<SessionUser | n
   try {
     const { payload } = await jose.jwtVerify(token, KEY);
     return payload as unknown as SessionUser;
-  } catch (error) {
+  } catch (_error) {
     return null;
   }
 }
@@ -45,7 +45,7 @@ export async function getSession(): Promise<SessionUser | null> {
     const token = cookieStore.get("session")?.value;
     if (!token) return null;
     return await verifySessionToken(token);
-  } catch (e) {
+  } catch (_e) {
     return null;
   }
 }

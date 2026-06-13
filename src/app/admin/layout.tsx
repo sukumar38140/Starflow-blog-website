@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { getSession } from "@/lib/auth";
-import { LayoutDashboard, FileText, UserCheck, Inbox, Users, LogOut, ArrowLeft } from "lucide-react";
+import { LayoutDashboard, FileText, Inbox, Users, LogOut } from "lucide-react";
 import { logoutAction } from "@/lib/actions";
 
 interface AdminLayoutProps {
@@ -25,7 +24,6 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
   }
 
   const isSuperAdminOrEditor = session.role === "super_admin" || session.role === "editor";
-  const isSuperAdmin = session.role === "super_admin";
 
   const adminLinks = [
     { label: "Overview", href: "/admin", icon: <LayoutDashboard size={16} />, visible: true },

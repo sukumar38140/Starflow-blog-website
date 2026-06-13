@@ -1,8 +1,7 @@
 import React from "react";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
-import { updateLeadStatus } from "@/lib/actions";
-import { Inbox, CheckCircle, Mail, Phone, Calendar, ArrowRight } from "lucide-react";
+import { Mail, Calendar } from "lucide-react";
 import StatusUpdateButton from "@/components/StatusUpdateButton";
 
 export const dynamic = "force-dynamic";

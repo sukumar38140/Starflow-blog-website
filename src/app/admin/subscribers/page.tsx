@@ -2,7 +2,7 @@ import React from "react";
 import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import ExportCsvButton from "@/components/ExportCsvButton";
-import { Users, Mail, Clock, CheckCircle, XCircle } from "lucide-react";
+import { Mail, Clock, CheckCircle, XCircle } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 

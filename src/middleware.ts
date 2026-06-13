@@ -18,7 +18,7 @@ export async function middleware(request: NextRequest) {
           await jose.jwtVerify(session, KEY);
           // Already logged in, redirect to dashboard
           return NextResponse.redirect(new URL("/admin", request.url));
-        } catch (e) {
+        } catch (_e) {
           // Token invalid, let them view login
         }
       }
@@ -67,7 +67,7 @@ export async function middleware(request: NextRequest) {
           headers: requestHeaders,
         },
       });
-    } catch (error) {
+    } catch (_error) {
       // Invalid token, redirect to login
       const response = NextResponse.redirect(new URL("/admin/login", request.url));
       response.cookies.delete("session");

@@ -4,8 +4,7 @@ import React, { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { saveContent, ContentSaveInput, BlockInput } from "@/lib/actions";
-import { ArrowLeft, Save, Plus, Trash2, ArrowUp, ArrowDown, Eye, Brain, HelpCircle, LayoutGrid, Quote, Type, Image as ImageIcon, Video, CreditCard } from "lucide-react";
-import Image from "next/image";
+import { ArrowLeft, Save, Plus, Trash2, ArrowUp, ArrowDown, Brain, HelpCircle, LayoutGrid, Quote, Type, Image as ImageIcon, Video, CreditCard } from "lucide-react";
 
 interface BlockEditorProps {
   post: {
@@ -69,7 +68,7 @@ export default function BlockEditor({
       let data = {};
       try {
         data = JSON.parse(b.data);
-      } catch (e) {}
+      } catch (_e) {}
       return {
         id: b.id,
         type: b.type,

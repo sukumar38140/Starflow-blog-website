@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import CreateArticleButton from "@/components/CreateArticleButton";
 import DeleteArticleButton from "@/components/DeleteArticleButton";
-import { Edit3, Eye, FileText, CheckCircle, Clock, Archive } from "lucide-react";
+import { Edit3, Eye, CheckCircle, Clock, Archive } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 

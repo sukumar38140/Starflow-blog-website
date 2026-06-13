@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useTransition } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
-import { Search, SlidersHorizontal, X, ArrowUpDown } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 interface FilterOption {
   id: string;
@@ -20,7 +20,7 @@ export default function BlogFilters({ categories, authors, tags }: BlogFiltersPr
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   // Local state for search to allow debouncing
   const [searchVal, setSearchVal] = useState(searchParams.get("q") || "");

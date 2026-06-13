@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { Sparkles, HelpCircle, Check, Play } from "lucide-react";
+import { HelpCircle, Check } from "lucide-react";
 
 interface BlockData {
   heading?: string;
