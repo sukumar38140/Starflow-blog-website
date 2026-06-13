@@ -20,6 +20,29 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "StartFlow AI | AI Automation Studio & Blog",
   description: "Automate workflows, deploy autonomous AI agents, and build organic authority with StartFlow AI.",
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/icon.png",
+  },
+  openGraph: {
+    title: "StartFlow AI | AI Automation Studio & Blog",
+    description: "Automate workflows, deploy autonomous AI agents, and build organic authority with StartFlow AI.",
+    url: "https://startflow.ai",
+    siteName: "StartFlow AI",
+    images: [{ url: "/icon.png", width: 1200, height: 630, alt: "StartFlow AI" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "StartFlow AI",
+    description: "AI-powered automation studio and blog.",
+    images: ["/icon.png"],
+  },
 };
 
 export default function RootLayout({
