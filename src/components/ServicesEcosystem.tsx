@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Database, GitBranch, PenTool, CreditCard, MessageSquare, ArrowRightLeft } from "lucide-react";
 
 interface ServiceNode {
@@ -83,8 +83,23 @@ export default function ServicesEcosystem() {
   // Check if a link between node A and node B is active
   const isLinkActive = (fromId: string, toId: string) => {
     if (!hoveredNode) return true;
-    return (hoveredNode === fromId && toId === toId) || (hoveredNode === toId && fromId === fromId);
+    return hoveredNode === fromId || hoveredNode === toId;
   };
+
+  // Inject dash keyframe animation via useEffect (App Router compatible)
+  useEffect(() => {
+    const styleId = "services-dash-keyframe";
+    if (!document.getElementById(styleId)) {
+      const style = document.createElement("style");
+      style.id = styleId;
+      style.textContent = `@keyframes dash { to { stroke-dashoffset: -50; } }`;
+      document.head.appendChild(style);
+    }
+    return () => {
+      const el = document.getElementById(styleId);
+      if (el) el.remove();
+    };
+  }, []);
 
   return (
     <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-40 border-t border-zinc-900/60">
@@ -264,14 +279,6 @@ export default function ServicesEcosystem() {
 
       </div>
 
-      {/* Dynamic dash keyframe injector (safeguard since tailwind animation compilation can delay) */}
-      <style jsx global>{`
-        @keyframes dash {
-          to {
-            stroke-dashoffset: -50;
-          }
-        }
-      `}</style>
     </section>
   );
 }
